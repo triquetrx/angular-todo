@@ -1,0 +1,102 @@
+<div class="container">
+  <h3 class="text-secondary mt-3">Create New Tasks</h3>
+  <form #task="ngForm" (submit)="newTask(task.value); task.reset()">
+    <div class="row mt-3">
+      <div class="col-md">
+        <div class="form-group">
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            required
+            #name="ngModel"
+            placeholder="Task Name"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <input
+            type="date"
+            name="dateOfCompletion"
+            class="form-control mt-md-0 mt-3"
+            required
+            #dateOfCompletion="ngModel"
+            placeholder="Task Name"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea
+          name="description"
+          class="form-control mt-3"
+          required
+          #description="ngModel"
+          placeholder="Task description"
+          ngModel
+        ></textarea>
+      </div>
+    </div>
+    <button class="my-3 btn btn-outline-primary" type="submit">Add task</button>
+    <button class="m-3 btn btn-danger" type="reset" (click)="task.reset()">
+      Clear all
+    </button>
+  </form>
+  <br />
+  <div class="result">
+    <div class="row">
+      <div class="col">
+        <h2 *ngIf="tasks.length > 0">Your todos</h2>
+      </div>
+      <div class="col-1 text-end">
+        <span class="badge rounded-pill bg-primary text-light">{{
+          tasks.length
+        }}</span>
+      </div>
+    </div>
+    <hr />
+    <div class="card my-2" *ngFor="let task of tasks; let i = index">
+      <div class="card-body" id="task {{ i }}">
+        <div class="row">
+          <div class="col-md">
+            <h5 class="card-title">{{ task.name }}</h5>
+            <h6 class="card-subtitle">
+              Created on: {{ task.date | date: "mediumDate" }}
+            </h6>
+            <p class="card-text">{{ task.description }}</p>
+          </div>
+          <div class="col-md-3 mt-md-0 mt-2">
+            <h6 class="card-subtitle">
+              {{ task.completeBy | date: "mediumDate" }}
+            </h6>
+          </div>
+          <div class="col-md-3" *ngIf="!task.isCompleted">
+            <div class="row">
+              <div class="col-md d-grid my-md-0 my-2">
+                <button
+                  class="btn btn-block btn-outline-success"
+                  (click)="markCompleted(i)"
+                >
+                  <i class="fa fa-check"></i>
+                </button>
+              </div>
+              <div class="col-md my-md-0 my-1 d-grid">
+                <button class="btn btn-block btn-danger" (click)="delete(i)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1" *ngIf="task.isCompleted">
+            <i
+              class="d-none d-md-block fa-solid fa-circle-check text-success"
+            ></i>
+            <h6 class="text-success d-block d-md-none">Marked as done</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
