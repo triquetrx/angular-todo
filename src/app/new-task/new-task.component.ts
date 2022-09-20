@@ -38,21 +38,10 @@ export class NewTaskComponent implements OnInit {
       this.tasks.push(newTask);
       localStorage.setItem('tasks', JSON.stringify(this.tasks));
       console.log(this.tasks);
+      window.location.reload();
     } else {
       console.log('Already present');
     }
-  }
-
-  delete(index: number) {
-    this.tasks.splice(index, 1);
-    localStorage.clear();
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
-  }
-
-  markCompleted(index: number) {
-    this.tasks[index].isCompleted = true;
-    localStorage.clear();
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   ngOnInit(): void {}
